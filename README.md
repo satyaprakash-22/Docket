@@ -6,7 +6,7 @@ A document can never be published unless the right person approved it, and every
 Built for the ElevateBox Engineering Challenge (*Controlled Document Approval System*).
 
 - **Author:** Satya Prakash
-- **Repo:** https://github.com/satyaprakash-22/docket *(update if you keep the old repo name)*
+- **Repo:** https://github.com/satyaprakash-22/docket
 - **Full spec:** [`PRD.md`](./PRD.md) · **Design rationale:** [`DESIGN.md`](./DESIGN.md) · **Build log:** [`PROGRESS.md`](./PROGRESS.md)
 
 ---
