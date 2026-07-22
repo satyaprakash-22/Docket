@@ -1,6 +1,5 @@
 # PRD — Controlled Document Approval System
 **For:** ElevateBox Engineering Challenge submission
-**Build target:** Antigravity (AI build agent) — this doc is the single source of truth it should build from
 **Author:** Satya Prakash
 
 ---
