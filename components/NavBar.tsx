@@ -34,7 +34,7 @@ export function NavBar({ user }: NavBarProps) {
   return (
     <nav className="nav">
       <Link href="/documents" className="nav-brand">
-        Elevate<span>Box</span>
+        	Doc<span>ket</span>
         <span
           style={{
             fontFamily: "var(--font-body)",
@@ -45,7 +45,7 @@ export function NavBar({ user }: NavBarProps) {
             letterSpacing: "0.04em",
           }}
         >
-          Docs
+          Approvals
         </span>
       </Link>
 

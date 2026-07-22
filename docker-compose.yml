@@ -3,11 +3,11 @@ version: '3.8'
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: elevatebox-postgres
+    container_name: docket-postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: elevatebox
+      POSTGRES_DB: docket
     ports:
       - "5432:5432"
     volumes:
@@ -20,11 +20,11 @@ services:
 
   postgres_test:
     image: postgres:16-alpine
-    container_name: elevatebox-postgres-test
+    container_name: docket-postgres-test
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: elevatebox_test
+      POSTGRES_DB: docket_test
     ports:
       - "5433:5432"
     volumes:

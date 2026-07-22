@@ -72,7 +72,7 @@ export default function LoginPage() {
               marginBottom: "8px",
             }}
           >
-            Elevate<span style={{ color: "var(--color-accent)" }}>Box</span>
+            Doc<span style={{ color: "var(--color-accent)" }}>ket</span>
           </h1>
           <p style={{ fontSize: "0.9375rem", color: "var(--color-text-secondary)" }}>
             Controlled Document Approval System
