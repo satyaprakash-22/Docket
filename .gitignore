@@ -1,41 +1,39 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+# Production builds
+.next/
+out/
+dist/
+build/
 
-# testing
-/coverage
+# Environment variables — NEVER commit real secrets
+.env
+.env.local
+.env.*.local
 
-# next.js
-/.next/
-/out/
+# Only commit .env.example (placeholders only)
 
-# production
-/build
-
-# misc
+# OS files
 .DS_Store
-*.pem
-
-# debug
+Thumbs.db
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
 
-# vercel
+# Prisma
+prisma/migrations/dev.db
+
+# Misc
 .vercel
-
-# typescript
 *.tsbuildinfo
 next-env.d.ts

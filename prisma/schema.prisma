@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  VIEWER
+  AUTHOR
+  REVIEWER
+  ADMIN
+}
+
+enum DocStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REJECTED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum AuditAction {
+  CREATED
+  EDITED
+  SUBMITTED
+  APPROVED
+  REJECTED
+  REOPENED
+  PUBLISHED
+  ARCHIVED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  role      Role
+  createdAt DateTime @default(now())
+
+  documents   Document[]   @relation("AuthoredDocuments")
+  auditEvents AuditEvent[]
+}
+
+model Document {
+  id        String    @id @default(cuid())
+  title     String
+  body      String
+  status    DocStatus @default(DRAFT)
+  version   Int       @default(1) // optimistic concurrency token
+  authorId  String
+  author    User      @relation("AuthoredDocuments", fields: [authorId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  auditEvents AuditEvent[]
+
+  // DB-level guard: status can only ever be one of the enum values (Postgres enforces this natively).
+  // Transition legality is enforced in application code (lib/workflow.ts) inside the same transaction as the audit write.
+
+  @@index([status])
+  @@index([authorId])
+}
+
+model AuditEvent {
+  id         String      @id @default(cuid())
+  documentId String
+  document   Document    @relation(fields: [documentId], references: [id])
+  actorId    String
+  actor      User        @relation(fields: [actorId], references: [id])
+  action     AuditAction
+  fromStatus DocStatus?
+  toStatus   DocStatus?
+  comment    String?
+  metadata   Json? // e.g. { titleChanged: true, titleBefore: "...", titleAfter: "..." } for EDITED events
+  createdAt  DateTime    @default(now())
+
+  // Append-only. No update/delete path exposed anywhere in the app.
+
+  @@index([documentId, createdAt])
+}
+
+// Presence tracking for the "reviewer queue with live presence" differentiator
+model Presence {
+  id         String   @id @default(cuid())
+  userId     String
+  documentId String
+  lastSeenAt DateTime @default(now()) @updatedAt
+
+  @@unique([userId, documentId])
+  @@index([documentId, lastSeenAt])
+}
