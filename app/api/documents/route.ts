@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 import { requireSession } from "@/lib/session";
 import { can } from "@/lib/permissions";
 import { toErrorResponse, ForbiddenError, ValidationError } from "@/lib/errors";
-import { DocStatus, AuditAction, Role } from "@prisma/client";
+import { DocStatus, AuditAction, Role, Prisma } from "@prisma/client";
 
 const createDocSchema = z.object({
   title: z
@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const statusFilter = searchParams.get("status") as DocStatus | null;
 
-    let whereClause: Parameters<typeof prisma.document.findMany>[0]["where"] = {};
+    let whereClause: Prisma.DocumentWhereInput = {};
 
     if (session.role === Role.VIEWER) {
       whereClause = { status: DocStatus.PUBLISHED };
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
     const parsed = createDocSchema.safeParse(body);
 
     if (!parsed.success) {
-      throw new ValidationError(parsed.error.errors[0].message);
+      throw new ValidationError(parsed.error.issues[0].message);
     }
 
     const { title, body: docBody } = parsed.data;

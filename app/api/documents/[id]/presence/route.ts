@@ -32,9 +32,6 @@ export async function GET(
         userId: { not: session.userId }, // Exclude self
         lastSeenAt: { gte: cutoff },
       },
-      include: {
-        // We need user info — join through a raw query or add a relation
-      },
       orderBy: { lastSeenAt: "desc" },
     });
 

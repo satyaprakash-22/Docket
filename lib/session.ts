@@ -8,7 +8,7 @@
  * changes their role — the server reads it from a signed cookie."
  */
 
-import { getIronSession, IronSession, IronSessionOptions } from "iron-session";
+import { getIronSession, IronSession, SessionOptions } from "iron-session";
 import { cookies } from "next/headers";
 import { Role } from "@prisma/client";
 import { UnauthorizedError } from "./errors";
@@ -20,7 +20,7 @@ export type SessionData = {
   email: string;
 };
 
-export const sessionOptions: IronSessionOptions = {
+export const sessionOptions: SessionOptions = {
   password: process.env.SESSION_SECRET!,
   cookieName: "elevatebox-session",
   cookieOptions: {

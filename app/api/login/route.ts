@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     const parsed = loginSchema.safeParse(body);
 
     if (!parsed.success) {
-      throw new ValidationError(parsed.error.errors[0].message);
+      throw new ValidationError(parsed.error.issues[0].message);
     }
 
     const { email } = parsed.data;

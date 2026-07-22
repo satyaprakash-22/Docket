@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/session";
 import { NavBar } from "@/components/NavBar";
-import { DocStatus, Role } from "@prisma/client";
+import { DocStatus, Role, Prisma } from "@prisma/client";
 
 interface SearchParams {
   status?: string;
@@ -23,7 +23,7 @@ export default async function DocumentsPage({
   const params = await searchParams;
   const filterStatus = params.status as DocStatus | undefined;
 
-  let whereClause: Parameters<typeof prisma.document.findMany>[0]["where"] = {};
+  let whereClause: Prisma.DocumentWhereInput = {};
 
   if (session.role === Role.VIEWER) {
     whereClause = { status: DocStatus.PUBLISHED };

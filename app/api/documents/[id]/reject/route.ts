@@ -25,7 +25,7 @@ export async function POST(
 
     const parsed = rejectSchema.safeParse(body);
     if (!parsed.success) {
-      throw new ValidationError(parsed.error.errors[0].message);
+      throw new ValidationError(parsed.error.issues[0].message);
     }
 
     const { expectedVersion, comment } = parsed.data;

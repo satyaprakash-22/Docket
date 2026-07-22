@@ -114,7 +114,7 @@ export async function PATCH(
     const parsed = editDocSchema.safeParse(body);
 
     if (!parsed.success) {
-      throw new ValidationError(parsed.error.errors[0].message);
+      throw new ValidationError(parsed.error.issues[0].message);
     }
 
     const { title, body: docBody, expectedVersion } = parsed.data;
